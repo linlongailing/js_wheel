@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="utf-8" />
+        <title>轮播图测试</title>
+        <style>
+        	#img_change,#img_select{list-style: none;}
+        	#img_change li{float: left;}
+        	#img_change li{display: block;}
+        	#img_change li:not(:first-child){display: none;}
+        	#img_select li{    
+        		float: left;
+			    width: 25px;
+			    height: 25px;
+			    background: gray;
+			    color: white;
+			    border-radius: 13px;
+			    text-align: center;
+			    margin-left: 11px;
+			    cursor: pointer;
+			}
+        </style>
+    </head>
+    <body>
+        <ul id="img_change">
+        	<li><img src="img/1.jpg" /></li>
+        	<li><img src="img/2.jpg" /></li>
+        	<li><img src="img/3.jpg" /></li>
+        </ul>
+        <ul id="img_select">
+        	<li>1</li>
+        	<li>2</li>
+        	<li>3</li>
+        </ul>
+        <script>
+        	var img_change=document.getElementById("img_change");
+        	var img_select=document.getElementById("img_select");
+
+        function change_img(index){
+        		var change_li=img_change.getElementsByTagName("li");
+        		for (var i=0;i<change_li.length;i++) {
+        			change_li[i].style.display="none";
+        		}
+        		
+        		change_li[index].style.display="block";
+        	}
+        	
+        	var select_li=img_select.getElementsByTagName("li");
+        	for (var i=0;i<select_li.length;i++) {
+        		select_li[i].index = i;
+        		select_li[i].addEventListener("mouseenter",function(){
+        			change_img(this.index);
+        			this.style.backgroundColor="red";
+        		},true);
+        		
+        		select_li[i].addEventListener("mouseout",function(){
+        			this.style.backgroundColor="gray";
+        		},true);
+        	}
+        	
+        	var currentLi=0;
+        	var timer;
+        	timer=setInterval(function(){
+        		var change_li=img_change.getElementsByTagName("li");
+        		for (var i=0;i<change_li.length;i++) {
+        			change_li[i].style.display="none";
+        		}
+        		
+        		change_li[currentLi].style.display="block";
+        		currentLi++;
+        		if(currentLi==3){
+        			currentLi=0;
+        		}
+        	},3000);
+        	
+        	function func1(){
+        		clearInterval(timer);
+        	}
+        	
+        	function func2(){
+        		timer=setInterval(function(){
+		        		var change_li=img_change.getElementsByTagName("li");
+		        		for (var i=0;i<change_li.length;i++) {
+		        			change_li[i].style.display="none";
+		        		}
+		        		
+		        		change_li[currentLi].style.display="block";
+		        		currentLi++;
+		        		if(currentLi==3){
+		        			currentLi=0;
+		        		}
+		        	},3000);
+        	}
+        	
+        	// 鼠标放到图片上禁止自动轮播
+        	var change_li=img_change.getElementsByTagName("li");
+        	for (var i=0;i<change_li.length;i++) {
+        		change_li[i].addEventListener("mouseover",func1,false);
+        		change_li[i].addEventListener("mouseout",func2,false);
+        	}
+        	
+        </script>
+    </body>
+</html>
